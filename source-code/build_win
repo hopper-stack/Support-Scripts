@@ -1,0 +1,15 @@
+#!/bin/bash
+# ----------------------------------------------------------
+#
+#   Date:     3rd September 2016
+#   Comments: Initial Version
+#
+# ----------------------------------------------------------
+
+virt-install --virt-type kvm --name win2k12r2 --ram 4096 \
+--cdrom=/vm/windows-2012r2.iso \
+--disk path=/vm/win2k12r2.qcow2,size=50,format=qcow2,bus=ide \
+--network network=default \
+--graphics vnc,listen=0.0.0.0 --noautoconsole \
+--os-type=windows --os-variant=win2k12r2
+

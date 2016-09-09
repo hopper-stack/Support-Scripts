@@ -1,0 +1,11 @@
+#!/bin/bash
+
+virsh destroy vyos_cont
+virsh destroy vyos_cmi
+
+virsh undefine vyos_cont
+virsh undefine vyos_cmi
+
+rm -f /vm/vyos_cont.qcow2
+rm -f /vm/vyos_cmi.qcow2
+

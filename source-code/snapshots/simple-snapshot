@@ -1,0 +1,13 @@
+#!/bin/bash
+
+action=create
+
+snapnm=base1
+
+./single-snapshot $action controller $snapnm
+./single-snapshot $action compute $snapnm
+./single-snapshot $action block $snapnm
+./single-snapshot $action object1 $snapnm
+./single-snapshot $action object2 $snapnm
+./single-snapshot $action network $snapnm
+

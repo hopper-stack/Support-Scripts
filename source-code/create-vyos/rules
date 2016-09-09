@@ -1,0 +1,281 @@
+#Zone:rule number:protocol:port:source:destination
+#source and destination groups = HAPROXY CONTROLLER NETWORK STORAGE COMPUTE all
+
+#################################################################
+## CONT-LOCAL
+CONT-LOCAL:3:icmp::::
+CONT-LOCAL:20:tcp:22:all:all:SSH
+
+#################################################################
+## CONT-COMP
+CONT-COMP:3:icmp::::
+CONT-COMP:20:tcp:22:all:all:SSH
+CONT-COMP:30:tcp:5672:CONTROLLER:COMPUTE:RabbitMQ
+CONT-COMP:31:tcp:5672:CONTROLLER:NETWORK:RabbitMQ
+CONT-COMP:200:tcp:5900-5999:CONTROLLER:COMPUTE:VNC for Consoles - one port for each active console connection.
+
+#################################################################
+## CONT-HAP
+CONT-HAP:3:icmp::::
+CONT-HAP:11:tcp_udp:123:all:all:NTP
+CONT-HAP:20:tcp:22:all:all:SSH
+CONT-HAP:40:tcp:3306:CONTROLLER:HAPROXY:MySQL
+CONT-HAP:41:tcp:3306:STORAGE:HAPROXY:MySQL
+CONT-HAP:50:tcp:35357:CONTROLLER:HAPROXY:Keystone Admin API
+CONT-HAP:51:tcp:35357:STORAGE:HAPROXY:Keystone Admin API
+CONT-HAP:70:tcp:8774:CONTROLLER:HAPROXY:Nova OpenStack API (nova-osapi)
+CONT-HAP:80:tcp:9292:CONTROLLER:HAPROXY:Glance API
+CONT-HAP:81:tcp:9292:STORAGE:HAPROXY:Glance API
+CONT-HAP:90:tcp:8773:CONTROLLER:HAPROXY:Nova EC2 API
+CONT-HAP:110:tcp:8776:CONTROLLER:HAPROXY:Cinder API
+CONT-HAP:120:tcp:8000:CONTROLLER:HAPROXY:Heat API
+CONT-HAP:130:tcp:5000:CONTROLLER:HAPROXY:Keystone Public API
+CONT-HAP:135:tcp:5000:STORAGE:HAPROXY:Keystone Public API
+CONT-HAP:150:tcp:8004:CONTROLLER:HAPROXY:Heat CFN (CloudFormation)
+CONT-HAP:160:tcp:8080:CONTROLLER:HAPROXY:Swift Proxy
+CONT-HAP:161:tcp:8080:STORAGE:HAPROXY:Swift Proxy
+CONT-HAP:170:tcp:9696:CONTROLLER:HAPROXY:Neutron API
+CONT-HAP:180:tcp:8777:CONTROLLER:HAPROXY:Ceilometer
+CONT-HAP:190:tcp:9191:STORAGE:HAPROXY:Glance registry
+
+#################################################################
+## EXT-LOCAL
+EXT-LOCAL:3:icmp::::
+EXT-LOCAL:20:tcp:22:all:all:SSH
+EXT-LOCAL:280:tcp:4118,7:all:all:DSMtoAGENT
+EXT-LOCAL:290:tcp_udp:53:all:all:DNS forwarding
+EXT-LOCAL:300:tcp_udp:67:all:all:DHCP LOGGING
+
+#################################################################
+## EXT-CONT
+EXT-CONT:280:tcp:4118:all:all:DSMtoAGENT
+EXT-CONT:290:tcp:7:all:all:DSAtoDSRA
+
+#################################################################
+## EXT-COMP
+EXT-COMP:280:tcp:4118,7:all:all:DSMtoAGENT
+
+#################################################################
+## EXT-HAP
+EXT-HAP:3:icmp:::
+EXT-HAP:60:tcp:80,443:all:HAPROXY:Customer on the External network to the Dashboard
+EXT-HAP:140:tcp:6080:all:HAPROXY:Customer access to the Console Proxy
+EXT-HAP:280:tcp:4118,7:all:all:DSMtoAGENT
+
+#################################################################
+## COMP-LOCAL
+COMP-LOCAL:3:icmp::::
+
+#################################################################
+## COMP-CONT
+COMP-CONT:3:icmp:::
+COMP-CONT:10:udp:53:all:all:DNS
+COMP-CONT:20:tcp:22:all:all:SSH
+COMP-CONT:30:tcp:5672:COMPUTE:CONTROLLER:RabbitMQ
+COMP-CONT:31:tcp:5672:NETWORK:CONTROLLER:RabbitMQ
+COMP-CONT:60:tcp:80,443:all:all:Access to repo for installation 
+COMP-CONT:80:udp:123:all:all:NTP
+
+#################################################################
+## COMP-HAP
+COMP-HAP:3:icmp::::
+COMP-HAP:11:tcp_udp:123:all:all:NTP
+COMP-HAP:20:tcp:22:all:all:SSH
+COMP-HAP:40:tcp:3306:COMPUTE:HAPROXY:MySQL
+COMP-HAP:50:tcp:35357:COMPUTE:HAPROXY:Keystone Admin API
+COMP-HAP:70:tcp:8774:COMPUTE:HAPROXY:Nova OpenStack API (nova-osapi)
+COMP-HAP:80:tcp:9292:COMPUTE:HAPROXY:Glance API
+COMP-HAP:100:tcp:8775:NETWORK:HAPROXY:Nova Metadata
+COMP-HAP:110:tcp:8776:COMPUTE:HAPROXY:Cinder API
+COMP-HAP:130:tcp:5000:COMPUTE:HAPROXY:Keystone Public API
+COMP-HAP:131:tcp:5000:NETWORK:HAPROXY:Keystone Public API
+COMP-HAP:170:tcp:9696:COMPUTE:HAPROXY:Neutron API
+COMP-HAP:171:tcp:9696:NETWORK:HAPROXY:Neutron API
+
+#################################################################
+## HAP-LOCAL
+HAP-LOCAL:3:icmp::::
+
+#################################################################
+## HAP-CONT
+HAP-CONT:3:icmp::::
+HAP-CONT:20:tcp:22:all:all:SSH
+HAP-CONT:30:tcp:5672:HAPROXY:CONTROLLER:RabbitMQ
+HAP-CONT:40:tcp:3306:HAPROXY:CONTROLLER:MySQL
+HAP-CONT:50:tcp:35357:HAPROXY:CONTROLLER:Keystone Admin API
+HAP-CONT:60:tcp:80,443:HAPROXY:all:Repo access
+HAP-CONT:70:tcp:8774:HAPROXY:CONTROLLER:Nova OpenStack API (nova-osapi)
+HAP-CONT:80:tcp:9292:HAPROXY:CONTROLLER:Glance API
+HAP-CONT:81:tcp:9292:HAPROXY:STORAGE:Glance API
+HAP-CONT:90:tcp:8773:HAPROXY:CONTROLLER:Nova EC2 API
+HAP-CONT:100:tcp:8775:HAPROXY:CONTROLLER:Nova Metadata
+HAP-CONT:110:tcp:8776:HAPROXY:CONTROLLER:Cinder API
+HAP-CONT:120:tcp:8000:HAPROXY:CONTROLLER:Heat API
+HAP-CONT:130:tcp:5000:HAPROXY:CONTROLLER:Keystone Public API
+HAP-CONT:140:tcp:6080:HAPROXY:CONTROLLER:Console Proxy
+HAP-CONT:150:tcp:8004:HAPROXY:CONTROLLER:Heat CFN (CloudFormation)
+HAP-CONT:160:tcp:8080:HAPROXY:CONTROLLER:Swift Proxy
+HAP-CONT:170:tcp:9696:HAPROXY:CONTROLLER:Neutron API
+HAP-CONT:180:tcp:8777:HAPROXY:CONTROLLER:Ceilometer
+HAP-CONT:190:tcp:9191:HAPROXY:STORAGE:Glance Registry
+HAP-CONT:210:udp:123:all:all:NTP
+HAP-CONT:220:tcp:11211:HAPROXY:CONTROLLER:Memcache
+HAP-CONT:230:tcp:8786:HAPROXY:CONTROLLER:Manila
+HAP-CONT:240:tcp:8042:HAPROXY:CONTROLLER:Alarming
+
+#################################################################
+## HAP-COMP
+HAP-COMP:3:icmp::::
+HAP-COMP:20:tcp:22:all:all:SSH
+
+#################################################################
+## MGMTSRV-LOCAL
+MGMTSRV-LOCAL:3:icmp::::
+MGMTSRV-LOCAL:20:tcp:22:all:all:SSH
+
+#################################################################
+## EXT-MGMTSRV
+EXT-MGMTSRV:3:icmp::::
+EXT-MGMTSRV:20:tcp:22:all:all:SSH
+EXT-MGMTSRV:30:tcp_udp:3389:all:all:For RDP to Jump servers
+EXT-MGMTSRV:40:tcp_udp:48000-50100:all:all:Nimsoft
+EXT-MGMTSRV:60:tcp:80,443,8443,8080:all:all:HTTP
+EXT-MGMTSRV:70:tcp_udp:137,138,139,445:all:all:For Windows Drive Sharing
+EXT-MGMTSRV:110:tcp_udp:53:all:all:DNS
+EXT-MGMTSRV:120:tcp:88:all:all:KerberosAuthentication
+EXT-MGMTSRV:130:udp:123:all:all:NTP
+EXT-MGMTSRV:140:tcp:135:all:all:RCPEndpoint
+EXT-MGMTSRV:160:tcp_udp:389:all:all:LDAPDCLocator
+EXT-MGMTSRV:170:tcp:3268:all:all:LDAP_GC
+EXT-MGMTSRV:180:tcp:636:all:all:LDAPSSL
+EXT-MGMTSRV:190:tcp:3269:all:all:LDAP_GC_SSL
+EXT-MGMTSRV:200:tcp_udp:49152-49407:all:all:ADReplication
+EXT-MGMTSRV:210:tcp_udp:464:all:all:UCAuthenticationPasswdChange
+EXT-MGMTSRV:220:tcp:3399,3400:all:all:CCMSCANENGINE
+EXT-MGMTSRV:230:tcp:5000:all:all:Keystone
+EXT-MGMTSRV:240:tcp_udp:52311:all:all:IEMRELAY to Hub
+EXT-MGMTSRV:260:tcp_udp:1433,1434:all:all:DSM to MSSQLSERVER
+EXT-MGMTSRV:270:tcp:4119:all:all:DSMConsole
+EXT-MGMTSRV:290:tcp_udp:514:all:all:syslog
+EXT-MGMTSRV:280:tcp:4118,7:all:all:DSMtoAGENT
+
+#################################################################
+## MGMTSRV-EXT
+MGMTSRV-EXT:3:icmp::::
+MGMTSRV-EXT:20:tcp:22:all:all:SSH
+MGMTSRV-EXT:30:tcp_udp:48000-50100:all:all:Nimsoft
+MGMTSRV-EXT:60:tcp:80,443,8443,8080:all:all:HTTP
+MGMTSRV-EXT:80:tcp:5900,3900:all:all:iDRAC and IMM console
+MGMTSRV-EXT:110:tcp_udp:53:all:all:DNS
+MGMTSRV-EXT:120:tcp_udp:88:all:all:KerberosAuthentication
+MGMTSRV-EXT:130:udp:123:all:all:NTP
+MGMTSRV-EXT:140:tcp:135:all:all:RCPEndpoint
+MGMTSRV-EXT:150:tcp:445:all:all:SMBOverIP
+MGMTSRV-EXT:160:tcp_udp:389:all:all:LDAPDCLocator
+MGMTSRV-EXT:170:tcp:3268:all:all:LDAP_GC
+MGMTSRV-EXT:180:tcp:636:all:all:LDAPSSL
+MGMTSRV-EXT:190:tcp:3269:all:all:LDAP_GC_SSL
+MGMTSRV-EXT:200:tcp_udp:49152-49407:all:all:ADReplication
+MGMTSRV-EXT:210:tcp_udp:464:all:all:UCAuthenticationPasswdChange
+MGMTSRV-EXT:70:tcp:3399,3400:all:all:CCMSCANENGINE
+MGMTSRV-EXT:220:tcp:5000:all:all:Keystone
+MGMTSRV-EXT:40:tcp_udp:52311:all:all:IEMRELAY to Hub
+MGMTSRV-EXT:230:udp:750:all:all:KerberosSecure
+MGMTSRV-EXT:240:tcp_udp:138,139,445:all:all:For Windows Drive Sharing
+MGMTSRV-EXT:250:udp:137:all:all:NETBIOS
+MGMTSRV-EXT:260:tcp_udp:1433,1434:all:all:DSM to MSSQLSERVER
+MGMTSRV-EXT:280:tcp:4120,4122:all:all:AGENTtoDSM
+MGMTSRV-EXT:290:tcp_udp:514:all:all:syslog
+
+#################################################################
+## MGMTSRV-CONT
+MGMTSRV-CONT:3:icmp::::
+MGMTSRV-CONT:20:tcp:22:all:all:SSH
+MGMTSRV-CONT:30:tcp:80,443:all:all:HTTP
+MGMTSRV-CONT:50:tcp:10080:all:all:Amanda Backup
+
+#################################################################
+## MGMTSRV-HAP
+MGMTSRV-HAP:3:icmp::::
+MGMTSRV-HAP:20:tcp:22:all:all:SSH
+MGMTSRV-HAP:30:tcp:80,443,8443:all:all:HTTP
+MGMTSRV-HAP:40:tcp:6080:all:all:Console Proxy
+MGMTSRV-HAP:50:tcp:10080:all:all:Amanda Backup
+MGMTSRV-HAP:130:tcp:5000:all:all:Keystone Public API
+MGMTSRV-HAP:131:tcp:35357:all:all:Keystone admin API
+MGMTSRV-HAP:140:tcp:9292:all:all:Glance API
+MGMTSRV-HAP:150:tcp:8774:all:all:Compute
+MGMTSRV-HAP:160:tcp:9696:all:all:Network
+MGMTSRV-HAP:170:tcp:8776:all:all:Volume
+MGMTSRV-HAP:180:tcp:8777:all:all:Metering
+MGMTSRV-HAP:190:tcp:8000:all:all:Cloud
+MGMTSRV-HAP:200:tcp:8004:all:all:Orchestration
+MGMTSRV-HAP:210:tcp:8080:all:all:ObjectStore
+MGMTSRV-HAP:220:tcp:883:all:all:OpenStackCloudProvider
+
+#################################################################
+## MGMTSRV-COMP
+MGMTSRV-COMP:3:icmp::::
+MGMTSRV-COMP:20:tcp:22:all:all:SSH
+MGMTSRV-COMP:50:tcp:10080:all:all:Amanda Backup
+
+#################################################################
+## CONT-MGMTSRV
+CONT-MGMTSRV:3:icmp::::
+CONT-MGMTSRV:20:tcp:22:all:all:SSH
+CONT-MGMTSRV:30:tcp:5043:all:all:Logstash
+CONT-MGMTSRV:50:tcp:10080:all:all:Amanda Backup
+CONT-MGMTSRV:60:tcp:80,443:all:all:HTTP
+
+#################################################################
+## HAP-MGMTSRV
+HAP-MGMTSRV:3:icmp::::
+HAP-MGMTSRV:20:tcp:22:all:all:SSH
+HAP-MGMTSRV:50:tcp:10080:all:all:Amanda Backup
+HAP-MGMTSRV:60:tcp:80,443,8443:all:all:HTTP
+HAP-MGMTSRV:130:tcp:5000:all:all:Keystone Public API
+HAP-MGMTSRV:131:tcp:35357:all:all:Keystone Admin API
+HAP-MGMTSRV:140:tcp:9292:all:all:Glance API
+HAP-MGMTSRV:150:tcp:8774:all:all:Compute
+HAP-MGMTSRV:160:tcp:9696:all:all:Network
+HAP-MGMTSRV:170:tcp:8776:all:all:Volume
+HAP-MGMTSRV:180:tcp:8777:all:all:Metering
+HAP-MGMTSRV:190:tcp:8000:all:all:Cloud
+HAP-MGMTSRV:200:tcp:8004:all:all:Orchestration
+HAP-MGMTSRV:210:tcp:8080:all:all:ObjectStore
+HAP-MGMTSRV:220:tcp:883:all:all:OpenStackCloudProvider
+
+#################################################################
+## COMP-MGMTSRV
+COMP-MGMTSRV:3:icmp::::
+COMP-MGMTSRV:20:tcp:22:all:all:SSH
+COMP-MGMTSRV:30:tcp:5043:all:all:Logstash
+COMP-MGMTSRV:50:tcp:10080:all:all:Amanda Backup
+COMP-MGMTSRV:60:tcp:80,443:all:all:HTTP
+
+#################################################################
+### Build specific configurations
+### Non-essential
+HAP-HOSTNET:300:udp:53:NTP:all:DNS lookups
+HAP-HOSTNET:310:udp:123:NTP:all:NTP
+HAP-HOSTNET:320:tcp:80:NTP:all:CURL Testing
+
+HAP-LOCAL:300:udp:53:NTP:all:DNS lookups
+HAP-LOCAL:310:udp:138:all:all:Netbios
+
+MGMTSRV-HAP:300:udp:123:all:all:NTP
+
+MGMTSRV-HOSTNET:300:udp:123:all:all:NTP
+MGMTSRV-HOSTNET:310:udp:53:all:all:DNS lookups
+
+COMP-HOSTNET:300:udp:53:all:all:DNS lookups
+
+HOSTNET-LOCAL:300:tcp:22:all:all:Host SSH
+HOSTNET-LOCAL:310:udp:67:all:all:DHCP requests
+HOSTNET-LOCAL:320:udp:68:all:all:DHCP requests
+HOSTNET-LOCAL:330:udp:138:all:all:Netbios
+
+COMP-MGMTSRV:300:udp:138:all:all:Netbios
+
+MGMTSRV-LOCAL:300:udp:138:all:all:Netbios
+

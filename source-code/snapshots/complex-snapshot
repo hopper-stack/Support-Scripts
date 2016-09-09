@@ -1,0 +1,41 @@
+#!/bin/bash
+
+action=create
+
+snapnm=base1
+
+./single-snapshot $action controller1 $snapnm
+./single-snapshot $action controller2 $snapnm
+./single-snapshot $action controller3 $snapnm
+
+./single-snapshot $action network1 $snapnm
+./single-snapshot $action network2 $snapnm
+./single-snapshot $action network3 $snapnm
+
+./single-snapshot $action storage1 $snapnm
+./single-snapshot $action storage2 $snapnm
+./single-snapshot $action storage3 $snapnm
+
+./single-snapshot $action haproxy1 $snapnm
+./single-snapshot $action haproxy2 $snapnm
+
+./single-snapshot $action amanda $snapnm
+./single-snapshot $action logstash $snapnm
+./single-snapshot $action squid $snapnm
+./single-snapshot $action ntp $snapnm
+./single-snapshot $action buildsvr $snapnm
+./single-snapshot $action yumrepo $snapnm
+./single-snapshot $action nagios $snapnm
+./single-snapshot $action dns $snapnm
+
+./single-snapshot $action browser $snapnm
+./single-snapshot $action router $snapnm
+
+./single-snapshot $action compute1 $snapnm
+./single-snapshot $action compute2 $snapnm
+./single-snapshot $action compute3 $snapnm
+
+./single-snapshot $action compute4 $snapnm
+./single-snapshot $action compute5 $snapnm
+./single-snapshot $action compute6 $snapnm
+

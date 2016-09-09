@@ -1,0 +1,53 @@
+# ----------------------------------------------------------
+#
+#   Date:     3rd September 2016
+#   Comments: Initial Version
+#
+# ----------------------------------------------------------
+#
+ 
+#  Create virtual networks
+# -------------------------
+#          Network             Network       Netmask
+NETWORK    publicnet          192.168.10.1   255.255.255.0
+NETWORK    tunnelnet          192.168.11.1   255.255.255.0
+
+#  Create virtual machines
+# -------------------------
+#          Server       Mem       vCPU 
+SERVER     controller   8192      4
+SERVER     compute      8192      4
+SERVER     block        2048      2
+SERVER     object1      2048      2
+SERVER     object2      2048      2
+SERVER     network      2048      2
+
+#  Add additonal network 
+# -----------------------
+#          Server       Network
+NICS       controller   tunnelnet
+NICS       controller   publicnet
+NICS       compute      tunnelnet
+NICS       compute      publicnet
+NICS       network      tunnelnet
+NICS       network      publicnet
+
+NICS       router       publicnet
+
+
+#  Additonal storage
+# -------------------
+#          Server       Name     Size     Device
+MKDISK     block        disk1    8G      vdb
+MKDISK     block        disk2    8G      vdc
+MKDISK     block        disk3    8G      vdd
+
+MKDISK     object1      disk1    8G      vdb
+MKDISK     object1      disk2    8G      vdc
+MKDISK     object1      disk3    8G      vdd
+
+MKDISK     object2      disk1    8G      vdb
+MKDISK     object2      disk2    8G      vdc
+MKDISK     object2      disk3    8G      vdd
+
+

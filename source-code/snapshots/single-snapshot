@@ -1,0 +1,84 @@
+#!/bin/bash
+# ------------------------------------------------------------------
+#
+#   Date:     3rd August 2015
+#   Comments: Initial Version
+#
+# ------------------------------------------------------------------
+
+
+#  domain listing
+# ----------------
+if [ x$1 == xdomain ]; then
+   clear
+   tput cup 2 1; tput setab 4; tput bold; tput setaf 7
+   echo " Domain List "
+   tput setaf 9; tput sgr0; tput cup 3 5
+   echo
+   virsh list
+   exit
+fi
+
+
+#  snapshot listing
+# ------------------
+if [[ x$1 == xlist && x$2 != x ]]; then
+   clear
+   echo
+   echo " Enter snapshot tag (ensure it is distinctive)"
+   echo
+   virsh snapshot-list $2
+   tput setaf 2
+   echo " Available tags"
+   tput setaf 7
+   echo
+   virsh snapshot-list $2 | awk '{print "   "$1}'
+   echo
+   exit
+fi
+
+
+#  snapshot creation
+# -------------------
+if [[ x$1 == xcreate && x$2 != x && x$3 != x ]]; then
+   echo " Snapshot Creation - $2 "
+   virsh snapshot-create-as $2 $3
+   exit
+fi
+
+
+#  snapshot deletion
+# -------------------
+if [[ x$1 == xdelete && x$2 != x && x$3 != x ]]; then
+   echo " Snapshot Deletion - $2 "
+   virsh snapshot-delete --domain $2 --snapshotname $3
+   exit
+fi
+
+
+#  snapshot revert
+# -------------------
+if [[ x$1 == xrevert && x$2 != x && x$3 != x ]]; then
+   echo " Snapshot Revert - $2 "
+   virsh snapshot-revert $2 --snapshotname $3
+   exit
+fi
+
+
+#  usage
+# -------
+if [[ x$1 == x || x$2 == x || x$3 == x ]]; then
+   clear
+   echo " Snapshot facility "
+   echo
+   tput setaf 3
+   echo "  Usage   ./single-snapshot domain                   (list domains)"
+   echo "          ./single-snapshot list   [instance]"
+   echo "          ./single-snapshot create [instance] [tag)]"
+   echo "          ./single-snapshot revert [instance] [tag)]"
+   echo "          ./single-snapshot delete [instance] [tag)]"
+   echo
+   tput setaf 7
+   exit
+fi
+

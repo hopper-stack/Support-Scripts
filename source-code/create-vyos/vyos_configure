@@ -1,0 +1,127 @@
+#!/bin/vbash
+################################################
+# Script to configure a vyos router / firewall
+#
+# Version 2.0 Mike Caesar - 21st Oct 2015
+#
+################################################
+source /opt/vyatta/etc/functions/script-template
+
+# Enter configure mode
+configure
+
+###########################################
+# Allocate IP addresses and descriptions
+# and zone policies to each NIC
+###########################################
+grep "^NIC:" config | while read line
+do
+	NAME=`echo $line | cut -d: -f2`
+	IP=`echo $line | cut -d: -f3`
+	NIC=`echo $line | cut -d: -f4`
+	set interfaces ethernet $NIC address $IP
+	set interfaces ethernet $NIC description $NAME
+	set zone-policy zone $NAME default-action drop
+	set zone-policy zone $NAME interface $NIC
+done
+
+#############################################
+# Create the local zone
+#############################################
+set zone-policy zone LOCAL default-action drop
+set zone-policy zone LOCAL local-zone
+
+##############################################
+# create static routes
+##############################################
+
+grep "^STATIC:" config | while read line
+do
+        SUBNET=`echo $line | cut -d: -f2`
+        NEXTHOP=`echo $line | cut -d: -f3`
+        DIST=`echo $line | cut -d: -f4`
+	set protocols static route $SUBNET next-hop $NEXTHOP distance $DIST
+done
+
+###########################################
+# Create address groups
+###########################################
+
+grep "^GROUP:" config | while read line
+do
+	GRPNAME=`echo $line | cut -d: -f2`
+	IPADDR=`echo $line | cut -d: -f3`
+	set firewall group address-group $GRPNAME address $IPADDR
+done
+
+###################################
+# Create the firewall rules by reading
+# entries from the rules file
+###################################
+
+for from in `grep "^NIC:" config | cut -d: -f2`
+do
+	for to in `grep "^NIC:" config | cut -d: -f2` LOCAL
+	do
+		# Don't need a zone from and to the same place
+		if [ $from = $to ]
+		then
+			continue
+		fi
+		zone=${from}-${to}
+
+		# Rules that apply to every zone
+		# These allow return traffic through
+		set firewall name $zone default-action drop
+		set firewall name $zone enable-default-log
+
+		set firewall name $zone rule 1 action 'accept'
+		set firewall name $zone rule 1 state established 'enable'
+		set firewall name $zone rule 1 state related 'enable'
+
+		set firewall name $zone rule 2 action 'drop'
+		set firewall name $zone rule 2 log 'enable'
+		set firewall name $zone rule 2 state invalid 'enable'
+
+		# Read further rules from the rules file
+		grep ^${zone} rules | while read line
+		do
+			rule=`echo $line | cut -d: -f2`
+			prot=`echo $line | cut -d: -f3`
+			port=`echo $line | cut -d: -f4`
+			srce=`echo $line | cut -d: -f5`
+			dest=`echo $line | cut -d: -f6`
+
+			set firewall name $zone rule $rule action accept
+			set firewall name $zone rule $rule protocol $prot
+			# if protocol is icmp don't need the rest of the rules
+			if [ $prot != icmp ]
+			then
+				set firewall name $zone rule $rule destination port $port
+				if [ $srce != all ]
+				then
+					set firewall name $zone rule $rule source group address-group $srce
+				fi
+				if [ $dest != all ]
+				then
+					set firewall name $zone rule $rule destination group address-group $dest
+				fi
+			fi
+		done
+		# Apply the zone policy
+		set zone-policy zone $to from $from firewall name $zone
+	done
+done
+
+##################################################
+#
+#  Add any custom commands not handled by the above
+#  script here.
+#
+#################################################
+set firewall name CONT-HAP rule 2 log disable
+set firewall name HAP-CONT rule 2 log disable
+
+# commit and save the changes
+commit
+save

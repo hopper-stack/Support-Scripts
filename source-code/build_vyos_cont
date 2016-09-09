@@ -1,0 +1,20 @@
+#!/bin/bash
+# ----------------------------------------------------------
+#
+#   Date:     3rd September 2016
+#   Comments: Initial Version
+#
+# ----------------------------------------------------------
+
+virt-install --virt-type kvm --name vyos_cont --ram 1024 \
+--cdrom=/vm/vyos-1.1.7-amd64.iso \
+--disk path=/vm/vyos_cont.qcow2,size=2,format=qcow2 \
+--network bridge=virbr601 \
+--network bridge=virbr550 \
+--network bridge=virbr551 \
+--network bridge=virbr552 \
+--network bridge=virbr515 \
+--network network=default \
+--graphics none \
+--os-type=linux --os-variant=debian7
+

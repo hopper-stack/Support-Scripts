@@ -1,0 +1,215 @@
+# ----------------------------------------------------------
+#
+#   Date:     3rd September 2016
+#   Comments: Initial Version
+#
+# ----------------------------------------------------------
+#
+#  Create virtual networks
+# -------------------------
+#          Network             Network          Netmask
+NETWORK    VLAN515             192.168.29.0     255.255.255.192
+NETWORK    VLAN552             192.168.30.32    255.255.255.224
+NETWORK    VLAN551             192.168.30.0     255.255.255.224
+
+NETWORK    VLAN550             192.168.30.144   255.255.255.240
+
+NETWORK    VLAN601             192.168.6.0      255.255.255.240
+NETWORK    VLAN600             172.16.23.0      255.255.255.0
+
+NETWORK    VLAN556             172.16.25.0      255.255.255.0
+NETWORK    VLAN555             172.16.26.0      255.255.255.0
+NETWORK    VLAN554             172.16.27.0      255.255.255.0
+NETWORK    VLAN553             172.16.28.0      255.255.255.0
+
+NETWORK    VLAN3001            192.168.31.0     255.255.255.0
+
+#  Create virtual machines
+# -------------------------
+#          Server        Mem       vCPU
+SERVER     controller1   4096      2
+SERVER     controller2   4096      2
+SERVER     controller3   4096      2
+
+SERVER     network1      1024      1
+SERVER     network2      1024      1
+SERVER     network3      1024      1
+
+SERVER     storage1      1024      1
+SERVER     storage2      1024      1
+SERVER     storage3      1024      1
+
+SERVER     haproxy1      1024      1
+SERVER     haproxy2      1024      1
+
+SERVER     amanda        1024      1
+SERVER     logstash      2048      2
+SERVER     squid         1024      1
+SERVER     ntp           1024      1
+SERVER     yumrepo       2048      2
+SERVER     buildsvr      2048      2
+SERVER     nagios        2048      2
+SERVER     dns           1024      1
+SERVER     router        1024      1
+
+SERVER     exttest       1024      1
+
+SERVER     compute1      8192      4
+SERVER     compute2      8192      4
+SERVER     compute3      8192      4
+SERVER     compute4      8192      4
+SERVER     compute5      8192      4
+SERVER     compute6      8192      4
+
+#  Add additonal network
+# -----------------------
+#          Server        Network
+NICS       controller1   VLAN551
+NICS       controller1   VLAN553
+NICS       controller2   VLAN551
+NICS       controller2   VLAN553
+NICS       controller3   VLAN551
+NICS       controller3   VLAN553
+
+NICS       network1      VLAN552
+NICS       network1      VLAN601
+NICS       network1      VLAN600
+NICS       network2      VLAN552
+NICS       network2      VLAN601
+NICS       network2      VLAN600
+NICS       network3      VLAN552
+NICS       network3      VLAN601
+NICS       network3      VLAN600
+
+NICS       network1      VLAN3001
+NICS       network2      VLAN3001
+NICS       network3      VLAN3001
+
+NICS       storage1      VLAN551
+NICS       storage1      VLAN556
+NICS       storage2      VLAN551
+NICS       storage2      VLAN556
+NICS       storage3      VLAN551
+NICS       storage3      VLAN556
+
+NICS       haproxy1      VLAN550
+NICS       haproxy1      VLAN554
+NICS       haproxy2      VLAN550
+NICS       haproxy2      VLAN554
+
+NICS       amanda        VLAN515
+NICS       logstash      VLAN515
+
+NICS       squid         VLAN550
+NICS       ntp           VLAN550
+
+NICS       buildsvr      VLAN515
+NICS       yumrepo       VLAN515
+NICS       nagios        VLAN515
+NICS       dns           VLAN515
+
+NICS       router        VLAN601
+
+NICS       compute1      VLAN552
+NICS       compute1      VLAN601
+NICS       compute1      VLAN600
+NICS       compute1      VLAN555
+
+NICS       compute2      VLAN552
+NICS       compute2      VLAN601
+NICS       compute2      VLAN600
+NICS       compute2      VLAN555
+
+NICS       compute3      VLAN552
+NICS       compute3      VLAN601
+NICS       compute3      VLAN600
+NICS       compute3      VLAN555
+
+NICS       compute4      VLAN552
+NICS       compute4      VLAN601
+NICS       compute4      VLAN600
+NICS       compute4      VLAN555
+
+NICS       compute5      VLAN552
+NICS       compute5      VLAN601
+NICS       compute5      VLAN600
+NICS       compute5      VLAN555
+
+NICS       compute6      VLAN552
+NICS       compute6      VLAN601
+NICS       compute6      VLAN600
+NICS       compute6      VLAN555
+
+NICS       compute1      VLAN3001
+NICS       compute2      VLAN3001
+NICS       compute3      VLAN3001
+NICS       compute4      VLAN3001
+NICS       compute5      VLAN3001
+NICS       compute6      VLAN3001
+
+#  Additonal storage
+# -------------------
+#          Server        Name     Size     Device
+MKDISK     amanda        disk1    500G     vdb
+MKDISK     logstash      disk1    500G     vdb
+
+MKDISK     controller1   disk1    200G     vdb
+MKDISK     controller2   disk1    200G     vdc
+MKDISK     controller3   disk1    200G     vdd
+
+MKDISK     compute1      disk1    210G     vdb
+MKDISK     compute1      disk2    210G     vdc
+MKDISK     compute1      disk3    210G     vdd
+MKDISK     compute1      disk4    100G     vde
+MKDISK     compute1      disk5    100G     vdf
+MKDISK     compute1      disk6    100G     vdg
+
+MKDISK     compute2      disk1    210G     vdb
+MKDISK     compute2      disk2    210G     vdc
+MKDISK     compute2      disk3    210G     vdd
+MKDISK     compute2      disk4    100G     vde
+MKDISK     compute2      disk5    100G     vdf
+MKDISK     compute2      disk6    100G     vdg
+
+MKDISK     compute3      disk1    210G     vdb
+MKDISK     compute3      disk2    210G     vdc
+MKDISK     compute3      disk3    210G     vdd
+MKDISK     compute3      disk4    100G     vde
+MKDISK     compute3      disk5    100G     vdf
+MKDISK     compute3      disk6    100G     vdg
+
+MKDISK     compute4      disk1    210G     vdb
+MKDISK     compute4      disk2    210G     vdc
+MKDISK     compute4      disk3    210G     vdd
+MKDISK     compute4      disk4    100G     vde
+MKDISK     compute4      disk5    100G     vdf
+MKDISK     compute4      disk6    100G     vdg
+
+MKDISK     compute5      disk1    210G     vdb
+MKDISK     compute5      disk2    210G     vdc
+MKDISK     compute5      disk3    210G     vdd
+MKDISK     compute5      disk4    100G     vde
+MKDISK     compute5      disk5    100G     vdf
+MKDISK     compute5      disk6    100G     vdg
+
+MKDISK     compute6      disk1    210G     vdb
+MKDISK     compute6      disk2    210G     vdc
+MKDISK     compute6      disk3    210G     vdd
+MKDISK     compute6      disk4    100G     vde
+MKDISK     compute6      disk5    100G     vdf
+MKDISK     compute6      disk6    100G     vdg
+
+MKDISK     storage1      disk1    30G      vdb
+MKDISK     storage1      disk2    30G      vdc
+MKDISK     storage1      disk3    30G      vdd
+
+MKDISK     storage2      disk1    30G      vdb
+MKDISK     storage2      disk2    30G      vdc
+MKDISK     storage2      disk3    30G      vdd
+
+MKDISK     storage3      disk1    30G      vdb
+MKDISK     storage3      disk2    30G      vdc
+MKDISK     storage3      disk3    30G      vdd
+
+MKDISK     yumrepo       disk1    100G     vdb
+
