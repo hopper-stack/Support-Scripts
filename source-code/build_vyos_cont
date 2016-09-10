@@ -15,6 +15,7 @@ virt-install --virt-type kvm --name vyos_cont --ram 1024 \
 --network bridge=virbr552 \
 --network bridge=virbr515 \
 --network network=default \
+--network bridge=virbr3001 \
 --graphics none \
 --os-type=linux --os-variant=debian7
 
