@@ -192,7 +192,8 @@ MGMTSRV-EXT:290:tcp_udp:514:all:all:syslog
 MGMTSRV-CONT:3:icmp::::
 MGMTSRV-CONT:20:tcp:22:all:all:SSH
 MGMTSRV-CONT:30:tcp:80,443:all:all:HTTP
-MGMTSRV-CONT:50:tcp:10080:all:all:Amanda Backup
+MGMTSRV-CONT:40:tcp:10080:all:all:Amanda Backup
+MGMTSRV-CONT:50:tcp:5666:all:all:Nagios
 
 #################################################################
 ## MGMTSRV-HAP
@@ -212,12 +213,14 @@ MGMTSRV-HAP:190:tcp:8000:all:all:Cloud
 MGMTSRV-HAP:200:tcp:8004:all:all:Orchestration
 MGMTSRV-HAP:210:tcp:8080:all:all:ObjectStore
 MGMTSRV-HAP:220:tcp:883:all:all:OpenStackCloudProvider
+MGMTSRV-HAP:230:tcp:5666:all:all:Nagios
 
 #################################################################
 ## MGMTSRV-COMP
 MGMTSRV-COMP:3:icmp::::
 MGMTSRV-COMP:20:tcp:22:all:all:SSH
 MGMTSRV-COMP:50:tcp:10080:all:all:Amanda Backup
+MGMTSRV-COMP:60:tcp:5666:all:all:Nagios
 
 #################################################################
 ## CONT-MGMTSRV
@@ -244,6 +247,7 @@ HAP-MGMTSRV:190:tcp:8000:all:all:Cloud
 HAP-MGMTSRV:200:tcp:8004:all:all:Orchestration
 HAP-MGMTSRV:210:tcp:8080:all:all:ObjectStore
 HAP-MGMTSRV:220:tcp:883:all:all:OpenStackCloudProvider
+HAP-MGMTSRV:230:tcp:5043:all:all:Logstash forwarder
 
 #################################################################
 ## COMP-MGMTSRV
@@ -255,7 +259,7 @@ COMP-MGMTSRV:60:tcp:80,443:all:all:HTTP
 
 #################################################################
 ### Build specific configurations
-### Non-essential
+### 
 HAP-HOSTNET:300:udp:53:NTP:all:DNS lookups
 HAP-HOSTNET:310:udp:123:NTP:all:NTP
 HAP-HOSTNET:320:tcp:80:NTP:all:CURL Testing
@@ -278,4 +282,6 @@ HOSTNET-LOCAL:330:udp:138:all:all:Netbios
 COMP-MGMTSRV:300:udp:138:all:all:Netbios
 
 MGMTSRV-LOCAL:300:udp:138:all:all:Netbios
+
+HOSTNET-HAP:10:tcp:80:all:all:Horizon
 
