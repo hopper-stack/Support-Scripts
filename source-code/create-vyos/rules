@@ -300,5 +300,7 @@ COMP-MGMTSRV:300:udp:138:all:all:Netbios
 
 MGMTSRV-LOCAL:300:udp:138:all:all:Netbios
 
-HOSTNET-HAP:10:tcp:80:all:all:Horizon
+HOSTNET-HAP:300:tcp:80:all:all:Horizon
+
+COMP-HAP:300:tcp:8775:COMPUTE:HAPROXY:Nova API
 
