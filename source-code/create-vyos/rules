@@ -314,4 +314,5 @@ COMP-HAP:310:tcp:3128:all:SQUID:Squid proxy
 CONT-LOCAL:300:udp:53:all:all:DNS lookups
 COMP-LOCAL:300:udp:53:all:all:DNS lookups
 
+CONT-MGMTSRV:300:tcp:389:all:all:LDAP
 
