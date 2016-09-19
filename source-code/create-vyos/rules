@@ -281,7 +281,8 @@ COMP-MGMTSRV:60:tcp:80,443:all:all:HTTP
 ### 
 HAP-HOSTNET:300:udp:53:NTP:all:DNS lookups
 HAP-HOSTNET:310:udp:123:NTP:all:NTP
-HAP-HOSTNET:320:tcp:80:NTP:all:CURL Testing
+HAP-HOSTNET:320:tcp:80:all:all:CURL Testing and Squid
+HAP-HOSTNET:320:tcp:443:all:all:CURL Testing and Squid
 
 HAP-LOCAL:300:udp:53:all:all:DNS lookups
 HAP-LOCAL:310:udp:138:all:all:Netbios
@@ -305,4 +306,10 @@ COMP-MGMTSRV:300:udp:138:all:all:Netbios
 MGMTSRV-LOCAL:300:udp:138:all:all:Netbios
 
 HOSTNET-HAP:300:tcp:80:all:all:Horizon
+
+CONT-HAP:300:tcp:3128:all:SQUID:Squid proxy
+COMP-HAP:310:tcp:3128:all:SQUID:Squid proxy
+
+CONT-LOCAL:300:udp:53:all:all:DNS lookups
+
 
