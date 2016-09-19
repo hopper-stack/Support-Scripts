@@ -283,7 +283,7 @@ HAP-HOSTNET:300:udp:53:NTP:all:DNS lookups
 HAP-HOSTNET:310:udp:123:NTP:all:NTP
 HAP-HOSTNET:320:tcp:80:NTP:all:CURL Testing
 
-HAP-LOCAL:300:udp:53:NTP:all:DNS lookups
+HAP-LOCAL:300:udp:53:all:all:DNS lookups
 HAP-LOCAL:310:udp:138:all:all:Netbios
 
 MGMTSRV-HAP:300:udp:123:all:all:NTP
