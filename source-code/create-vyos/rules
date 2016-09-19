@@ -54,6 +54,7 @@ CONT-HAP:161:tcp:8080:STORAGE:HAPROXY:Swift Proxy
 CONT-HAP:170:tcp:9696:CONTROLLER:HAPROXY:Neutron API
 CONT-HAP:180:tcp:8777:CONTROLLER:HAPROXY:Ceilometer
 CONT-HAP:190:tcp:9191:STORAGE:HAPROXY:Glance registry
+CONT-HAP:200:tcp:8042:CONTROLLER:HAPROXY:Alarming
 
 #################################################################
 ## EXT-LOCAL
@@ -108,6 +109,7 @@ COMP-HAP:130:tcp:5000:COMPUTE:HAPROXY:Keystone Public API
 COMP-HAP:131:tcp:5000:NETWORK:HAPROXY:Keystone Public API
 COMP-HAP:170:tcp:9696:COMPUTE:HAPROXY:Neutron API
 COMP-HAP:171:tcp:9696:NETWORK:HAPROXY:Neutron API
+COMP-HAP:180:tcp:8775:COMPUTE:HAPROXY:Nova API
 
 #################################################################
 ## HAP-LOCAL
@@ -301,6 +303,4 @@ COMP-MGMTSRV:300:udp:138:all:all:Netbios
 MGMTSRV-LOCAL:300:udp:138:all:all:Netbios
 
 HOSTNET-HAP:300:tcp:80:all:all:Horizon
-
-COMP-HAP:300:tcp:8775:COMPUTE:HAPROXY:Nova API
 
