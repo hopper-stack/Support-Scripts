@@ -288,6 +288,7 @@ HAP-LOCAL:300:udp:53:all:all:DNS lookups
 HAP-LOCAL:310:udp:138:all:all:Netbios
 
 MGMTSRV-HAP:300:udp:123:all:all:NTP
+MGMTSRV-HAP:310:tcp:3128:all:SQUID:Squid proxy
 
 MGMTSRV-HOSTNET:300:udp:123:all:all:NTP
 MGMTSRV-HOSTNET:310:udp:53:all:all:DNS lookups
@@ -311,5 +312,6 @@ CONT-HAP:300:tcp:3128:all:SQUID:Squid proxy
 COMP-HAP:310:tcp:3128:all:SQUID:Squid proxy
 
 CONT-LOCAL:300:udp:53:all:all:DNS lookups
+COMP-LOCAL:300:udp:53:all:all:DNS lookups
 
 
