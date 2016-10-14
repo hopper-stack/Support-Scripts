@@ -55,6 +55,7 @@ CONT-HAP:170:tcp:9696:CONTROLLER:HAPROXY:Neutron API
 CONT-HAP:180:tcp:8777:CONTROLLER:HAPROXY:Ceilometer
 CONT-HAP:190:tcp:9191:STORAGE:HAPROXY:Glance registry
 CONT-HAP:200:tcp:8042:CONTROLLER:HAPROXY:Alarming
+CONT-HAP:210:tcp:9511:CONTROLLER:HAPROXY:Magnum
 
 #################################################################
 ## EXT-LOCAL
@@ -141,6 +142,7 @@ HAP-CONT:210:udp:123:all:all:NTP
 HAP-CONT:220:tcp:11211:HAPROXY:CONTROLLER:Memcache
 HAP-CONT:230:tcp:8786:HAPROXY:CONTROLLER:Manila
 HAP-CONT:240:tcp:8042:HAPROXY:CONTROLLER:Alarming
+HAP-CONT:250:tcp:9511:HAPROXY:CONTROLLER:Magnum
 
 #################################################################
 ## HAP-COMP
